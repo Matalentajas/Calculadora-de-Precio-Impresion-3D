@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { 
   Calculator, 
   Package, 
@@ -13,10 +13,21 @@ import { useCalculatorStore } from './store/useCalculatorStore';
 import InputGroup from './components/InputGroup';
 
 export default function App() {
-  // Conectamos con el Store (Cerebro con persistencia)
+  // 1. Registro de la PWA (Service Worker)
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+          console.log('Service Worker registration failed: ', err);
+        });
+      });
+    }
+  }, []);
+
+  // 2. Conexión con el Store (Zustand)
   const { data, updateData } = useCalculatorStore();
 
-  // Lógica de cálculo dinámica
+  // 3. Lógica de cálculo dinámica
   const materialCost = (data.weight * data.pricePerKg) / 1000;
   const energyCost = (data.printerWattage * data.time / 1000) * data.energyPrice;
   const productionCost = materialCost + energyCost;
@@ -48,7 +59,7 @@ export default function App() {
         <div className="mt-auto pt-6 border-t border-slate-800">
           <div className="bg-slate-800/30 p-4 rounded-xl border border-slate-800/50 text-center">
             <p className="text-slate-500 text-xs uppercase font-semibold mb-1">Modo Offline</p>
-            <p className="text-emerald-400 font-mono text-xs font-bold">ACTIVO</p>
+            <p className="text-emerald-400 font-mono text-xs font-bold tracking-widest uppercase">Listo</p>
           </div>
         </div>
       </aside>
@@ -61,7 +72,6 @@ export default function App() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Panel de Entradas */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-xl">
               <h3 className="text-xl font-semibold mb-8 flex items-center gap-2 text-slate-100">
@@ -102,7 +112,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Panel de Resultados */}
           <div className="space-y-6">
             <div className="bg-blue-600 p-8 rounded-3xl shadow-2xl shadow-blue-900/40 text-white relative overflow-hidden group">
               <div className="relative z-10">
@@ -113,19 +122,18 @@ export default function App() {
                 
                 <div className="space-y-4 pt-6 border-t border-blue-400/30">
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-blue-100 opacity-80">Coste Material</span>
-                    <span className="font-mono font-bold">{materialCost.toFixed(2)}€</span>
+                    <span className="text-blue-100 opacity-80 font-medium">Coste Material</span>
+                    <span className="font-mono font-bold bg-blue-700/30 px-2 py-1 rounded">{materialCost.toFixed(2)}€</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-blue-100 opacity-80">Coste Eléctrico</span>
-                    <span className="font-mono font-bold">{energyCost.toFixed(2)}€</span>
+                    <span className="text-blue-100 opacity-80 font-medium">Coste Eléctrico</span>
+                    <span className="font-mono font-bold bg-blue-700/30 px-2 py-1 rounded">{energyCost.toFixed(2)}€</span>
                   </div>
                 </div>
               </div>
               <Calculator size={140} className="absolute -right-8 -bottom-8 text-white opacity-5 rotate-12" />
             </div>
 
-            {/* Control de Margen */}
             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
               <div className="flex justify-between mb-4">
                 <label className="text-sm font-medium text-slate-400">Margen de Beneficio</label>
