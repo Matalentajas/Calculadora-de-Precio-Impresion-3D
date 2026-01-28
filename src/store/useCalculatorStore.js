@@ -6,7 +6,7 @@ export const useCalculatorStore = create(
     (set) => ({
       data: {
         isPremiumMode: false,
-        activeTab: 'calculator',
+        activeTab: 'calculator', 
         weight: 0,
         pricePerKg: 20,
         timeHours: 0,
@@ -30,6 +30,7 @@ export const useCalculatorStore = create(
       updateData: (newData) => 
         set((state) => ({ data: { ...state.data, ...newData } })),
       
+      // Materiales
       addMaterial: (mat) => set((state) => ({
         data: { ...state.data, materials: [mat, ...state.data.materials] }
       })),
@@ -39,7 +40,8 @@ export const useCalculatorStore = create(
       deleteMaterial: (id) => set((state) => ({
         data: { ...state.data, materials: state.data.materials.filter(m => m.id !== id) }
       })),
-
+      
+      // Impresoras
       addPrinter: (printer) => set((state) => ({
         data: { ...state.data, customPrinters: [printer, ...state.data.customPrinters] }
       })),
@@ -57,6 +59,6 @@ export const useCalculatorStore = create(
         data: { ...state.data, savedProjects: state.data.savedProjects.filter(p => p.id !== id) }
       }))
     }),
-    { name: '3d-print-pro-master-v4.4' }
+    { name: '3d-price-master-v4.6' }
   )
 );
