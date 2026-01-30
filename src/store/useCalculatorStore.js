@@ -7,6 +7,7 @@ export const useCalculatorStore = create(
       data: {
         isPremiumMode: false,
         activeTab: 'calculator',
+        editingProjectId: null,
         selectedPrinterId: null,
         selectedMaterialId: null,
         projectName: '',
@@ -33,16 +34,26 @@ export const useCalculatorStore = create(
         savedProjects: [],
         customPrinters: []
       },
-      updateData: (newData) => set((state) => ({ data: { ...state.data, ...newData } })),
+      // PROTECCIÓN: updateData extrae las bases de datos del input para no sobrescribirlas accidentalmente
+      updateData: (newData) => set((state) => {
+        const { materials, customPrinters, savedProjects, ...safeData } = newData; 
+        return { data: { ...state.data, ...safeData } };
+      }),
       addMaterial: (mat) => set((state) => ({ data: { ...state.data, materials: [mat, ...state.data.materials] } })),
       updateMaterial: (id, updatedMat) => set((state) => ({ data: { ...state.data, materials: state.data.materials.map(m => m.id === id ? { ...m, ...updatedMat } : m) } })),
       deleteMaterial: (id) => set((state) => ({ data: { ...state.data, materials: state.data.materials.filter(m => m.id !== id) } })),
       addPrinter: (printer) => set((state) => ({ data: { ...state.data, customPrinters: [printer, ...state.data.customPrinters] } })),
       updatePrinter: (id, updatedPrinter) => set((state) => ({ data: { ...state.data, customPrinters: state.data.customPrinters.map(p => p.id === id ? { ...p, ...updatedPrinter } : p) } })),
       deletePrinter: (id) => set((state) => ({ data: { ...state.data, customPrinters: state.data.customPrinters.filter(p => p.id !== id) } })),
-      saveProject: (project) => set((state) => ({ data: { ...state.data, savedProjects: [project, ...state.data.savedProjects] } })),
+      saveProject: (project) => set((state) => {
+        const exists = state.data.savedProjects.find(p => p.id === project.id);
+        const newProjects = exists 
+          ? state.data.savedProjects.map(p => p.id === project.id ? project : p)
+          : [project, ...state.data.savedProjects];
+        return { data: { ...state.data, savedProjects: newProjects, editingProjectId: null } };
+      }),
       deleteProject: (id) => set((state) => ({ data: { ...state.data, savedProjects: state.data.savedProjects.filter(p => p.id !== id) } }))
     }),
-    { name: '3d-price-pro-v5.2-stable' }
+    { name: '3d-price-pro-v7.0-stable' }
   )
 );
