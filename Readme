@@ -41,7 +41,7 @@ Construido con **React**, **Tailwind CSS** y **Zustand**, ofrece una experiencia
 1. **Clonar el repositorio**
    ```bash
    git clone [https://github.com/Matalentajas/Calculadora-de-Precio-Impresion-3D]
-   cd 3dprice-pro
+   cd Calculadora-de-Precio-Impresion-3D
 
 2. **Instalar dependencias**
    ```bash
