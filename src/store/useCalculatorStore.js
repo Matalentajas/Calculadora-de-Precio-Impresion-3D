@@ -5,32 +5,31 @@ export const useCalculatorStore = create(
   persist(
     (set) => ({
       data: {
-        hourlyRate: 15,
-        energyPrice: 0.15,
-        profitMargin: 30,
-        taxRate: 21,
-        includeTax: true,
-        failRate: 5,
+        // --- CONFIGURACIÓN ECONÓMICA v31 ---
+        laborCost: 0,          // Mano de Obra (FIJO, por pieza/proyecto)
+        energyPrice: 0.11,     // Precio luz España
         
+        profitMargin: 30,      // Margen beneficio (%)
+        taxRate: 21,           // IVA (%)
+        includeTax: true,      
+        failRate: 5,           // Tasa de fallo (%)
+        
+        // Estado App
+        activeTab: 'calculator', 
         currentStep: 0,
-        analyzedFile: null,
+        analyzedFile: null, 
         
         selectedPrinterId: null,
-        selectedMaterialId: null,
+        filamentCosts: {}, 
         
-        materials: [],
         customPrinters: [],
         savedProjects: []
       },
       
       updateData: (newData) => set((state) => ({ data: { ...state.data, ...newData } })),
-      
-      addMaterial: (mat) => set((state) => ({ data: { ...state.data, materials: [mat, ...state.data.materials] } })),
-      deleteMaterial: (id) => set((state) => ({ data: { ...state.data, materials: state.data.materials.filter(m => m.id !== id) } })),
-      
+      setFilamentCost: (slot, price) => set((state) => ({ data: { ...state.data, filamentCosts: { ...state.data.filamentCosts, [slot]: price } } })),
       addPrinter: (printer) => set((state) => ({ data: { ...state.data, customPrinters: [printer, ...state.data.customPrinters] } })),
       deletePrinter: (id) => set((state) => ({ data: { ...state.data, customPrinters: state.data.customPrinters.filter(p => p.id !== id) } })),
-      
       saveProject: (project) => set((state) => ({ data: { ...state.data, savedProjects: [project, ...state.data.savedProjects] } })),
       deleteProject: (id) => set((state) => ({ data: { ...state.data, savedProjects: state.data.savedProjects.filter(p => p.id !== id) } })),
       
@@ -39,11 +38,12 @@ export const useCalculatorStore = create(
           ...state.data, 
           currentStep: 0, 
           analyzedFile: null, 
-          selectedPrinterId: null, 
-          selectedMaterialId: null 
+          selectedPrinterId: null,
+          filamentCosts: {},
+          activeTab: 'calculator'
         } 
       }))
     }),
-    { name: '3d-price-pro-v11.1-safe' } // NOMBRE NUEVO PARA LIMPIAR ERRORES
+    { name: '3d-price-pro-v31' }
   )
 );
