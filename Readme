@@ -1,0 +1,59 @@
+# 🦁 3DPrice Pro v1.0
+
+> **El ERP definitivo para Granjas de Impresión 3D y Makers Profesionales.**
+> De G-Code a Factura PDF en segundos. 100% Local. Open Source.
+
+## 🚀 ¿Qué es 3DPrice Pro?
+
+3DPrice Pro es una suite de gestión de producción diseñada para eliminar las conjeturas en el negocio de la impresión 3D. Olvídate de Excel y cálculos a mano. Arrastra tus archivos, configura tu margen y genera presupuestos profesionales al instante.
+
+Construido con **React**, **Tailwind CSS** y **Zustand**, ofrece una experiencia fluida, moderna y reactiva.
+
+## ✨ Características Principales (v1.0)
+
+### 🧠 Análisis Inteligente (G-Code Parser)
+- **Soporte Multi-Slicer:** Detecta automáticamente Bambu Studio, PrusaSlicer, Cura, Orca, etc.
+- **Lectura Nativa:** Extrae tiempos reales, pesos exactos, altura de capa y número de capas.
+- **Kits Multi-Archivo:** Arrastra múltiples piezas (carcasa, tapa, botones) y calcula el coste conjunto.
+
+### 🏭 Modo Producción
+- **Gestión de Lotes:** Define la cantidad de unidades. El sistema escala costes de material y energía, pero gestiona inteligentemente la mano de obra.
+- **Coste Real de Energía:** Cálculo basado en consumo (Watts) x Tiempo x Precio kWh.
+- **Librería de Materiales:** Guarda tus bobinas (PLA, PETG, ASA) y sus precios para un acceso rápido.
+- **Base de Datos de Máquinas:** Configura tu flota de impresoras con sus costes de mantenimiento específicos.
+
+### 💼 Facturación Profesional
+- **Editor WYSIWYG:** Lo que ves en la previsualización es idéntico al PDF final.
+- **3 Plantillas:** Diseños *Corporate*, *Modern* (con sidebar) y *Minimal*.
+- **Branding:** Personaliza logo, colores corporativos y datos fiscales.
+- **Historial Persistente:** Guarda proyectos con una "foto" de los precios en ese momento (Snapshot).
+
+## 🛠️ Stack Tecnológico
+
+- **Frontend:** React 18 + Vite
+- **Estilos:** Tailwind CSS + Lucide Icons
+- **Estado:** Zustand (con Persist Middleware)
+- **PDF Engine:** jsPDF (Motor personalizado de renderizado)
+- **Privacidad:** **Local-First**. Tus datos y archivos nunca salen de tu navegador.
+
+## 📦 Instalación y Uso
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone [https://github.com/Matalentajas/Calculadora-de-Precio-Impresion-3D]
+   cd 3dprice-pro
+
+2. **Instalar dependencias**
+   ```bash
+   npm install
+
+3. **Arrancar en local**
+   ```bash
+   npm run dev
+
+4. **Arrancar en producción**
+   ```bash
+   npm run build
+
+🤝 **Contribución**
+Las Pull Requests son bienvenidas. Para cambios mayores, por favor abre primero un issue para discutir lo que te gustaría cambiar.
